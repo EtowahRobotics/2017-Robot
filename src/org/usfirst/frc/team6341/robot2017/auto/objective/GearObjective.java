@@ -17,6 +17,8 @@ public class GearObjective extends AutoObjective {
 	private double speed;
 	private double delay = 0.5;
 
+	private boolean slowed = false;
+
 	/**
 	 * Constructs a gear objective
 	 * @param speed Motor speed
@@ -30,11 +32,13 @@ public class GearObjective extends AutoObjective {
 		Robot.drivetrain.autoDrive(speed, 0);
 
 		VisionTracking.listen("target_airship", (event) -> {
-			if (event.area.length > 0) {
+			if (event.area.length > 0 && !slowed) {
 				for (double area : event.area) {
 					if (area > 10_000) {
 						speed /= 2;
 						Robot.drivetrain.autoDrive(speed, 0);
+						slowed = true;
+						break;
 					}
 				}
 			}
