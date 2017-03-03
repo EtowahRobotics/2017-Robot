@@ -16,8 +16,9 @@ public class RobotMap {
 	public static int frontRight = 1;
 	public static int backRight = 0;
 
-	// TODO Get the right ports
-	public static int rotationMotor = -1;
-	public static int leftFlyWheel = -1;
-	public static int rightFlyWheel = -1;
+	public static int flyWheels = 0;
+	public static int turretRotation = 14;
+
+	public static int pulley1 = 4;
+	public static int pulley2 = 11;
 }

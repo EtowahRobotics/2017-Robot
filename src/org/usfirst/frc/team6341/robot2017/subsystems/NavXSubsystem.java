@@ -1,3 +1,6 @@
+/**
+ * (c) 2017 Etowah Robotics
+ */
 package org.usfirst.frc.team6341.robot2017.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
@@ -5,6 +8,10 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Contains the NavX MXP
+ * @author Dan Mulloy
+ */
 public class NavXSubsystem extends EagleSubsystem {
 	private AHRS ahrs;
 

@@ -30,21 +30,17 @@ public class GearObjective extends AutoObjective {
 		Robot.drivetrain.autoDrive(speed, 0);
 
 		VisionTracking.listen("target_airship", (event) -> {
-			if (event.area.length == 0) {
-				return;
-			}
-
-			for (double area : event.area) {
-				if (area > 10_000) {
-					speed /= 2;
-					Robot.drivetrain.autoDrive(speed, 0);
+			if (event.area.length > 0) {
+				for (double area : event.area) {
+					if (area > 10_000) {
+						speed /= 2;
+						Robot.drivetrain.autoDrive(speed, 0);
+					}
 				}
 			}
 		});
 
-		CollisionTracking.addListener(() -> {
-			
-		});
+		CollisionTracking.addListener(() -> finish());
 	}
 
 	@Override

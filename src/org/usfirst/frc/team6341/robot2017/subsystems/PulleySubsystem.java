@@ -3,6 +3,8 @@
  */
 package org.usfirst.frc.team6341.robot2017.subsystems;
 
+import org.usfirst.frc.team6341.robot2017.RobotMap;
+
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,8 +22,8 @@ public class PulleySubsystem extends EagleSubsystem {
 
 	public PulleySubsystem() {
 		try {
-			pulley1 = new Spark(4);
-			pulley2 = new Spark(11);
+			pulley1 = new Spark(RobotMap.pulley1);
+			pulley2 = new Spark(RobotMap.pulley2);
 			
 			pulley1.set(0);
 			pulley2.set(0);

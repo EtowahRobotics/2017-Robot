@@ -9,13 +9,12 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Custom drivetrain I've been messing with. Currently doesn't work properly.
+ * Custom drivetrain I've been messing with. Actually totally works, we've been
+ * using it for a while now.
  * @author Dan Mulloy
  */
 @SuppressWarnings("unused") // Unfinished implementation
 public class CustomDrive extends Drivetrain implements MotorSafety {
-	private static final double CORRECTION = 0.0000075;
-
 	private double expirationTime = 0.1;
 	private double sensitivity = 0.5;
 
