@@ -1,7 +1,7 @@
 package org.usfirst.frc.team6341.robot2017;
 
 import org.usfirst.frc.team6341.robot2017.commands.NavXResetCommand;
-import org.usfirst.frc.team6341.robot2017.commands.TurretPowerCommand;
+import org.usfirst.frc.team6341.robot2017.commands.SensitivityCommand;
 
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
+
+// TODO We may remap the controls entirely, tbd
 public class OI {
 	int driveStickPort = 0;
 	public Joystick driveStick = new Joystick(driveStickPort);
@@ -23,9 +25,11 @@ public class OI {
 	private Hand pitchHand = Hand.kLeft;
 	private Hand trigHand = Hand.kRight;
 
-	int resetButtonNo = 2; // Nick plays with the trigger too much
-	int testButtonNo = 7;
-	int fallbackButtonNo = 9;
+	int resetButtonNo = 2;
+	// int testButtonNo = 7;
+	// int fallbackButtonNo = 9;
+	int increaseSensitivityNo = 5;
+	int decreaseSensitivityNo = 6;
 
 	int leftBumperNo = 5;
 	int rightBumperNo = 6;
@@ -34,13 +38,19 @@ public class OI {
 		JoystickButton resetButton = new JoystickButton(driveStick, resetButtonNo);
 		resetButton.whenPressed(new NavXResetCommand());
 
+		JoystickButton increaseSensitivity = new JoystickButton(driveStick, increaseSensitivityNo);
+		increaseSensitivity.whenPressed(new SensitivityCommand(true));
+
+		JoystickButton decreaseSensitivity = new JoystickButton(driveStick, decreaseSensitivityNo);
+		decreaseSensitivity.whenPressed(new SensitivityCommand(false));
+
+		/*
 		JoystickButton leftBumper = new JoystickButton(shootController, leftBumperNo);
 		leftBumper.whenPressed(new TurretPowerCommand(false));
 		
 		JoystickButton rightBumper = new JoystickButton(shootController, rightBumperNo);
 		rightBumper.whenPressed(new TurretPowerCommand(true));
 
-		/*
 		JoystickButton testButton = new JoystickButton(driveStick, testButtonNo);
 		testButton.whenPressed(new TestCommand());
 
@@ -55,6 +65,10 @@ public class OI {
 
 	public double getTrigger() {
 		return shootController.getTriggerAxis(trigHand);
+	}
+
+	public boolean getClimbTrigger() {
+		return driveStick.getRawButton(7);
 	}
 
 	//// CREATING BUTTONS

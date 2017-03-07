@@ -28,6 +28,8 @@ public class StandardAutoCommand extends Command {
 			} else {
 				finished = true;
 			}
+		} else {
+			routine.periodic();
 		}
 	}
 

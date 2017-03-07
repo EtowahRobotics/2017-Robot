@@ -25,9 +25,14 @@ public class HopperObjective extends AutoObjective {
 	}
 
 	@Override
-	public void execute() {
+	public void start() {
 		Robot.drivetrain.autoDrive(speed, 0);
 		CollisionTracking.addListener(() -> finish());
+	}
+
+	@Override
+	public void periodic() {
+		Robot.drivetrain.autoDrive(speed, 0);
 	}
 
 	@Override

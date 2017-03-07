@@ -34,9 +34,13 @@ public abstract class Drivetrain extends EagleSubsystem {
 		this.backRight = new Spark(RobotMap.backRight);
 	}
 
+	public void changeSensitivity(int delta) { }
+
 	public abstract void teleopDrive(Joystick stick);
 
 	public void autoDrive(double move, double curve) {
+		SmartDashboard.putNumber("autoMove", move);
+		SmartDashboard.putNumber("autoCurve", curve);
 		rawDrive(move, curve + CORRECTION);
 	}
 

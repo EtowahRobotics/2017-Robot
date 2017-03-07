@@ -12,7 +12,11 @@ import org.usfirst.frc.team6341.robot2017.Robot;
 public class PreparationObjective extends AutoObjective {
 
 	@Override
-	public void execute() {
+	public void start() {
 		Robot.navX.reset();
+		finish();
 	}
+
+	@Override
+	public void periodic() { }
 }

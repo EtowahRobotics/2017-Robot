@@ -8,18 +8,24 @@ import org.usfirst.frc.team6341.robot2017.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
- * Falls back to the default robot drive implementation
+ * Changes the sensitivity on the controls
  * @author Dan Mulloy
  */
-public class FallbackCommand extends Command {
+public class SensitivityCommand extends Command {
+	private int delta = 1;
+
+	public SensitivityCommand(boolean increase) {
+		if (!increase) delta = -delta;
+	}
 
 	@Override
 	public void execute() {
-		Robot.swapDrivetrains();
+		Robot.drivetrain.changeSensitivity(delta);
 	}
-	
+
 	@Override
 	protected boolean isFinished() {
 		return true; // Single execution
 	}
+
 }

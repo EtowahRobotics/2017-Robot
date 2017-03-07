@@ -5,7 +5,7 @@ package org.usfirst.frc.team6341.robot2017.auto.objective;
 
 import org.usfirst.frc.team6341.robot2017.Robot;
 import org.usfirst.frc.team6341.robot2017.auto.CollisionTracking;
-import org.usfirst.frc.team6341.robot2017.auto.VisionTracking;
+import org.usfirst.frc.team6341.robot2017.vision.VisionTracking;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -13,9 +13,9 @@ import edu.wpi.first.wpilibj.Timer;
  * Drops off the 60 point gear in autonomous
  * @author Dan Mulloy
  */
-public class GearObjective extends AutoObjective {
+public class GearObjective extends DriveBasedObjective {
 	private double speed;
-	private double delay = 0.5;
+	private double delay = 1.0;
 
 	private boolean slowed = false;
 
@@ -24,11 +24,11 @@ public class GearObjective extends AutoObjective {
 	 * @param speed Motor speed
 	 */
 	public GearObjective(double speed) {
-		this.speed = speed;
+		super(speed);
 	}
 
 	@Override
-	public void execute() {
+	public void start() {
 		Robot.drivetrain.autoDrive(speed, 0);
 
 		VisionTracking.listen("target_airship", (event) -> {
@@ -49,7 +49,7 @@ public class GearObjective extends AutoObjective {
 
 	@Override
 	public void preFinish() {
-		// Give Seth half a second
+		// Give Seth a second
 		Timer.delay(delay);
 	}
 }

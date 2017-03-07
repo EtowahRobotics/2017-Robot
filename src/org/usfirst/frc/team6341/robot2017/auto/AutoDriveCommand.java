@@ -1,7 +1,7 @@
 /**
  * (c) 2017 Etowah Robotics
  */
-package org.usfirst.frc.team6341.robot2017.commands;
+package org.usfirst.frc.team6341.robot2017.auto;
 
 import org.usfirst.frc.team6341.robot2017.Robot;
 import org.usfirst.frc.team6341.robot2017.tasks.IterativeMotorTask;

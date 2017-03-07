@@ -5,7 +5,7 @@ package org.usfirst.frc.team6341.robot2017.auto.objective;
 
 import org.usfirst.frc.team6341.robot2017.Robot;
 import org.usfirst.frc.team6341.robot2017.auto.CollisionTracking;
-import org.usfirst.frc.team6341.robot2017.auto.VisionTracking;
+import org.usfirst.frc.team6341.robot2017.vision.VisionTracking;
 
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
  * Aligns the robot with the high goal
  * @author Dan Mulloy
  */
-public class AlignObjective extends AutoObjective {
+public class AlignObjective extends DriveBasedObjective {
 	private double speed;
 
 	/**
@@ -21,11 +21,11 @@ public class AlignObjective extends AutoObjective {
 	 * @param speed Motor speed
 	 */
 	public AlignObjective(double speed) {
-		this.speed = speed;
+		super(speed);
 	}
 
 	@Override
-	public void execute() {
+	public void start() {
 		Robot.drivetrain.autoDrive(speed, 0);
 
 		String table = getAlliance() == Alliance.Red ? VisionTracking.redBoilerTarget : VisionTracking.blueBoilerTarget;

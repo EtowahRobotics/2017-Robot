@@ -10,8 +10,10 @@ import org.usfirst.frc.team6341.robot2017.Robot;
  * @author Dan Mulloy
  */
 public class RotationObjective extends AutoObjective {
-	private double delta;
 	private double speed;
+
+	private double delta;
+	private double end;
 
 	/**
 	 * Constructs a rotation objective
@@ -24,16 +26,30 @@ public class RotationObjective extends AutoObjective {
 	}
 
 	@Override
-	public void execute() {
+	public void start() {
+		if (delta == 0) {
+			finish();
+			return;
+		}
+
 		double start = Robot.navX.getAngle();
-		double end = start + delta;
+		this.end = start + delta;
+		periodic();
+	}
+
+	@Override
+	public void periodic() {
 		if (delta > 0) {
-			while (end < Robot.navX.getAngle()) {
+			if (end < Robot.navX.getAngle()) {
 				Robot.drivetrain.power(-speed, speed);
+			} else {
+				finish();
 			}
 		} else {
-			while (end > Robot.navX.getAngle()) {
+			if (end > Robot.navX.getAngle()) {
 				Robot.drivetrain.power(speed, -speed);
+			} else {
+				finish();
 			}
 		}
 	}

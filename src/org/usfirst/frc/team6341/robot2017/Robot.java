@@ -5,19 +5,18 @@ package org.usfirst.frc.team6341.robot2017;
 
 import java.util.Timer;
 
+import org.usfirst.frc.team6341.robot2017.auto.AutoDriveCommand;
 import org.usfirst.frc.team6341.robot2017.auto.StandardAutoCommand;
-import org.usfirst.frc.team6341.robot2017.auto.VisionTracking;
-import org.usfirst.frc.team6341.robot2017.commands.AutoDriveCommand;
+import org.usfirst.frc.team6341.robot2017.commands.ClimbCommand;
 import org.usfirst.frc.team6341.robot2017.commands.TeleopDriveCommand;
-import org.usfirst.frc.team6341.robot2017.commands.TeleopTurretCommand;
+import org.usfirst.frc.team6341.robot2017.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team6341.robot2017.subsystems.NavXSubsystem;
-import org.usfirst.frc.team6341.robot2017.subsystems.PulleySubsystem;
 import org.usfirst.frc.team6341.robot2017.subsystems.TestSubsystem;
-import org.usfirst.frc.team6341.robot2017.subsystems.TurretSubsystem;
-import org.usfirst.frc.team6341.robot2017.subsystems.drive.CustomDrive;
-import org.usfirst.frc.team6341.robot2017.subsystems.drive.Drivetrain;
 import org.usfirst.frc.team6341.robot2017.subsystems.drive.EagleDrive;
+import org.usfirst.frc.team6341.robot2017.subsystems.drive.Drivetrain;
+import org.usfirst.frc.team6341.robot2017.vision.VisionTracking;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -42,13 +41,18 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
 	Command driveCommand;
 
+	// ---- Climbing Mech
+	public static ClimberSubsystem climber;
+	Command climbCommand;
+
 	// ---- NavX
 	public static NavXSubsystem navX;
 
 	// ---- Turret
-	public static TurretSubsystem turret;
+	// Currently disabled
+	/* public static TurretSubsystem turret;
 	public static PulleySubsystem pulleys;
-	Command turretCommand;
+	Command turretCommand; */
 
 	// ---- Testing
 	public static TestSubsystem test;
@@ -69,18 +73,6 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
-	 * Swaps drivetrain code on the fly. Not recommended.
-	 */
-	public static void swapDrivetrains() {
-		drivetrain.release();
-		if (drivetrain instanceof EagleDrive) {
-			drivetrain = new CustomDrive();
-		} else {
-			drivetrain = new EagleDrive();
-		}
-	}
-
-	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
@@ -88,12 +80,15 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 
-		drivetrain = new CustomDrive();
+		drivetrain = new EagleDrive();
 		driveCommand = new TeleopDriveCommand();
 
-		turret = new TurretSubsystem();
-		pulleys = new PulleySubsystem();
-		turretCommand = new TeleopTurretCommand();
+		climber = new ClimberSubsystem();
+		climbCommand = new ClimbCommand();
+
+		// turret = new TurretSubsystem();
+		// pulleys = new PulleySubsystem();
+		// turretCommand = new TeleopTurretCommand();
 
 		navX = new NavXSubsystem();
 
@@ -137,6 +132,9 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
+
+		SmartDashboard.putString("alliance", DriverStation.getInstance().getAlliance().name());
+		SmartDashboard.putNumber("station", DriverStation.getInstance().getLocation());
 	}
 
 	/**
@@ -145,6 +143,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
+		VisionTracking.tick();
 	}
 
 	@Override
@@ -159,7 +158,9 @@ public class Robot extends IterativeRobot {
 		// Start the drivetrain
 		driveCommand.start();
 		// Start the turret
-		turretCommand.start();
+		// turretCommand.start();
+		// Start the climber
+		climbCommand.start();
 	}
 
 	/**

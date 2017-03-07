@@ -19,9 +19,14 @@ public abstract class AutoObjective {
 	}
 
 	/**
-	 * Executes this objective. Only called once
+	 * Starts this objective. Only called once.
 	 */
-	public abstract void execute();
+	public abstract void start();
+
+	/**
+	 * Periodically executes to keep motors running
+	 */
+	public abstract void periodic();
 
 	/**
 	 * Called just before the objective finishes. Use this for delays, etc.

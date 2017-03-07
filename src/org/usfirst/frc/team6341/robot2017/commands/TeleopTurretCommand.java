@@ -3,10 +3,7 @@
  */
 package org.usfirst.frc.team6341.robot2017.commands;
 
-import org.usfirst.frc.team6341.robot2017.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Basic repeating turret command. This command never stops executing, though
@@ -14,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * @author Dan Mulloy
  */
 public class TeleopTurretCommand extends Command {
-	private static final double DEAD_ZONE = 0.3; // 0.3^2 == 0.09 < 0.1
+	/* private static final double DEAD_ZONE = 0.3; // 0.3^2 == 0.09 < 0.1
 
 	@Override
 	public void start() {
@@ -46,7 +43,7 @@ public class TeleopTurretCommand extends Command {
 	public void end() {
 		Robot.turret.slowDown();
 		Robot.turret.setPower(0.5D);
-	}
+	} */
 
 	@Override
 	protected boolean isFinished() {

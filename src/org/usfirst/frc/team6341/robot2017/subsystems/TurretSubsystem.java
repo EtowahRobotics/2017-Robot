@@ -3,7 +3,6 @@
  */
 package org.usfirst.frc.team6341.robot2017.subsystems;
 
-import org.usfirst.frc.team6341.robot2017.RobotMap;
 import org.usfirst.frc.team6341.robot2017.tasks.IterativeMotorTask;
 
 import com.ctre.CANTalon;
@@ -26,7 +25,7 @@ public class TurretSubsystem extends EagleSubsystem {
 	private Spark rotation;
 	private CANTalon flyWheels;
 
-	public TurretSubsystem() {
+	public TurretSubsystem() { /*
 		rotation = new Spark(RobotMap.turretRotation);
 		flyWheels = new CANTalon(RobotMap.flyWheels);
 
@@ -37,7 +36,7 @@ public class TurretSubsystem extends EagleSubsystem {
 		this.rotating = false;
 
 		updateDashboard();
-	}
+	*/ }
 
 	public void spinUp() {
 		new IterativeMotorTask(0, power, 0.1, 100, (speed) -> flyWheels.set(speed));

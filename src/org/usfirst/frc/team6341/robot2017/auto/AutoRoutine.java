@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.usfirst.frc.team6341.robot2017.auto.objective.AutoObjective;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * Boilerplate code for autonomous routines
  * @author Dan Mulloy
@@ -25,7 +27,7 @@ public class AutoRoutine {
 	public void start() {
 		this.index = 0;
 		this.current = objectives.get(index);
-		current.execute();
+		current.start();
 	}
 
 	public void next() {
@@ -38,11 +40,19 @@ public class AutoRoutine {
 		index++;
 		this.current = objectives.get(index);
 		current.setPrevious(previous);
-		current.execute();
+		SmartDashboard.putString("autoRoutine", current.getClass().getSimpleName());
+		current.start();
+	}
+
+	public void periodic() {
+		if (!isFinished())
+			current.periodic();
 	}
 
 	public boolean isFinished() {
-		return current != null && current.isFinished();
+		boolean finished = current != null && current.isFinished();
+		SmartDashboard.putBoolean("autoFinished", finished);
+		return finished;
 	}
 
 	public boolean hasNext() {

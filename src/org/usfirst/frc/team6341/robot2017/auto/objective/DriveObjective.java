@@ -3,15 +3,15 @@
  */
 package org.usfirst.frc.team6341.robot2017.auto.objective;
 
-import org.usfirst.frc.team6341.robot2017.Robot;
+import java.util.TimerTask;
 
-import edu.wpi.first.wpilibj.Timer;
+import org.usfirst.frc.team6341.robot2017.Robot;
 
 /**
  * Drives straight for some amount of seconds
  * @author Dan Mulloy
  */
-public class DriveObjective extends AutoObjective {
+public class DriveObjective extends DriveBasedObjective {
 	private double speed;
 	private double time;
 
@@ -21,14 +21,18 @@ public class DriveObjective extends AutoObjective {
 	 * @param time Time in seconds
 	 */
 	public DriveObjective(double speed, double time) {
-		this.speed = speed;
+		super(speed);
 		this.time = time;
 	}
 
 	@Override
-	public void execute() {
+	public void start() {
 		Robot.drivetrain.autoDrive(speed, 0);
-		Timer.delay(time);
-		finish();
+		Robot.timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				finish();
+			}
+		}, ((long) time * 1000));
 	}
 }
