@@ -16,7 +16,7 @@ public class TeleopDriveCommand extends Command {
 
 	@Override
 	public void execute() {
-		Robot.drivetrain.teleopDrive(Robot.oi.driveStick);
+		Robot.drivetrain.teleopDrive(Robot.oi.getDriveStick());
 	}
 
 	@Override

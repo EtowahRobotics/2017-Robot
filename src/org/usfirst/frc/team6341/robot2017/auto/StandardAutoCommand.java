@@ -22,14 +22,21 @@ public class StandardAutoCommand extends Command {
 
 	@Override
 	public void execute() {
-		if (routine.isFinished()) {
-			if (routine.hasNext()) {
-				routine.next();
+		try {
+			if (routine.isFinished()) {
+				if (routine.hasNext()) {
+					routine.next();
+				} else {
+					finished = true;
+				}
 			} else {
-				finished = true;
+				routine.periodic();
 			}
-		} else {
-			routine.periodic();
+		} catch (Throwable ex) {
+			// Autonomous failed, don't screw teleop
+			finished = true;
+			cancel();
+			return;
 		}
 	}
 

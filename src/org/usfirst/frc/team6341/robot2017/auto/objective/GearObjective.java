@@ -5,7 +5,6 @@ package org.usfirst.frc.team6341.robot2017.auto.objective;
 
 import org.usfirst.frc.team6341.robot2017.Robot;
 import org.usfirst.frc.team6341.robot2017.auto.CollisionTracking;
-import org.usfirst.frc.team6341.robot2017.vision.VisionTracking;
 
 import edu.wpi.first.wpilibj.Timer;
 
@@ -15,23 +14,26 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class GearObjective extends DriveBasedObjective {
 	private double speed;
-	private double delay = 1.0;
-
-	private boolean slowed = false;
+	private double delay = 2.0;
 
 	/**
 	 * Constructs a gear objective
 	 * @param speed Motor speed
+	 * @param curve Drive curve
+	 * @param timeout Objective timeout
 	 */
-	public GearObjective(double speed) {
-		super(speed);
+	public GearObjective(double speed, double curve, double timeout) {
+		super(speed, curve, timeout);
 	}
 
 	@Override
 	public void start() {
-		Robot.drivetrain.autoDrive(speed, 0);
+		setTimeout();
+		Robot.drivetrain.autoDrive(speed, curve);
 
-		VisionTracking.listen("target_airship", (event) -> {
+		// TODO I'd like to use vision tracking with the gears
+
+		/* VisionTracking.listen("target_airship", (event) -> {
 			if (event.area.length > 0 && !slowed) {
 				for (double area : event.area) {
 					if (area > 10_000) {
@@ -42,14 +44,14 @@ public class GearObjective extends DriveBasedObjective {
 					}
 				}
 			}
-		});
+		}); */
 
 		CollisionTracking.addListener(() -> finish());
 	}
 
 	@Override
 	public void preFinish() {
-		// Give Seth a second
+		// Wait two seconds
 		Timer.delay(delay);
 	}
 }

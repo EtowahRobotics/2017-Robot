@@ -3,6 +3,10 @@
  */
 package org.usfirst.frc.team6341.robot2017.auto.objective;
 
+import java.util.TimerTask;
+
+import org.usfirst.frc.team6341.robot2017.Timers;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 
@@ -38,6 +42,9 @@ public abstract class AutoObjective {
 	 * Marks this objective as completed
 	 */
 	public final void finish() {
+		if (timeout != null)
+			timeout.cancel();
+
 		if (! finished) {
 			preFinish();
 			finished = true;
@@ -54,11 +61,22 @@ public abstract class AutoObjective {
 
 	// ---- Useful Methods
 
+	private TimerTask timeout;
+
+	/**
+	 * Sets the timeout for this objective. If this time passes, the objective
+	 * will terminate
+	 * @param timeout Timeout in seconds
+	 */
+	protected void timeout(double timeout) {
+		this.timeout = Timers.scheduleAuto(() -> finish(), timeout);
+	}
+
 	/**
 	 * Returns the alliance we are currently on
 	 * @return The alliance
 	 */
-	public Alliance getAlliance() {
+	protected Alliance getAlliance() {
 		return DriverStation.getInstance().getAlliance();
 	}
 }

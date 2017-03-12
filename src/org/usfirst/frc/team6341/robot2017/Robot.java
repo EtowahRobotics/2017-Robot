@@ -3,17 +3,14 @@
  */
 package org.usfirst.frc.team6341.robot2017;
 
-import java.util.Timer;
-
 import org.usfirst.frc.team6341.robot2017.auto.AutoDriveCommand;
 import org.usfirst.frc.team6341.robot2017.auto.StandardAutoCommand;
 import org.usfirst.frc.team6341.robot2017.commands.ClimbCommand;
 import org.usfirst.frc.team6341.robot2017.commands.TeleopDriveCommand;
 import org.usfirst.frc.team6341.robot2017.subsystems.ClimberSubsystem;
 import org.usfirst.frc.team6341.robot2017.subsystems.NavXSubsystem;
-import org.usfirst.frc.team6341.robot2017.subsystems.TestSubsystem;
-import org.usfirst.frc.team6341.robot2017.subsystems.drive.EagleDrive;
 import org.usfirst.frc.team6341.robot2017.subsystems.drive.Drivetrain;
+import org.usfirst.frc.team6341.robot2017.subsystems.drive.EagleDrive;
 import org.usfirst.frc.team6341.robot2017.vision.VisionTracking;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -34,6 +31,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 	public static final int TEAM = 6341;
 
+	private static Robot instance;
+	public static Robot getInstance() { return instance; }
+
+	public Robot() {
+		super();
+		instance = this;
+	}
+
 	// ---- Controls
 	public static OI oi;
 
@@ -48,29 +53,9 @@ public class Robot extends IterativeRobot {
 	// ---- NavX
 	public static NavXSubsystem navX;
 
-	// ---- Turret
-	// Currently disabled
-	/* public static TurretSubsystem turret;
-	public static PulleySubsystem pulleys;
-	Command turretCommand; */
-
-	// ---- Testing
-	public static TestSubsystem test;
-
 	// ---- Autonomous
 	Command autonomousCommand;
 	SendableChooser<Command> chooser = new SendableChooser<>();
-
-	public static Timer timer = new Timer();
-
-	/**
-	 * Initializes testing code if it hasn't been initialized already
-	 */
-	public static void initTest() {
-		if (test == null) {
-			test = new TestSubsystem();
-		}
-	}
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -86,13 +71,12 @@ public class Robot extends IterativeRobot {
 		climber = new ClimberSubsystem();
 		climbCommand = new ClimbCommand();
 
-		// turret = new TurretSubsystem();
-		// pulleys = new PulleySubsystem();
-		// turretCommand = new TeleopTurretCommand();
-
 		navX = new NavXSubsystem();
 
 		VisionTracking.init();
+
+		SmartDashboard.putString("alliance", DriverStation.getInstance().getAlliance().name());
+		SmartDashboard.putNumber("station", DriverStation.getInstance().getLocation());
 
 		chooser.addDefault("Standard", new StandardAutoCommand());
 		chooser.addObject("DriveTest", new AutoDriveCommand());
@@ -106,7 +90,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void disabledInit() {
-
+		Timers.cancelAll();
 	}
 
 	@Override
@@ -132,9 +116,6 @@ public class Robot extends IterativeRobot {
 		// schedule the autonomous command (example)
 		if (autonomousCommand != null)
 			autonomousCommand.start();
-
-		SmartDashboard.putString("alliance", DriverStation.getInstance().getAlliance().name());
-		SmartDashboard.putNumber("station", DriverStation.getInstance().getLocation());
 	}
 
 	/**
@@ -143,11 +124,12 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		Scheduler.getInstance().run();
-		VisionTracking.tick();
 	}
 
 	@Override
 	public void teleopInit() {
+		Timers.cancelAuto();
+
 		// This makes sure that the autonomous stops running when
 		// teleop starts running. If you want the autonomous to
 		// continue until interrupted by another command, remove

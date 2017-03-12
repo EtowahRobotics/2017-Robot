@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.command.TimedCommand;
 public class AutoDriveCommand extends TimedCommand {
 	static double TIME = 2.5; // Run for 2.5 seconds
 	static double SPEED = 0.5; // ...at half speed
-	static int WAIT_TIME = 100; // ...wait 100ms between iterations
+	static double WAIT_TIME = 0.1; // ...wait 100ms between iterations
 	static int COOLDOWN_ITERS =  (int) (SPEED * 10); // ...and cool down at the end.
 
 	public AutoDriveCommand() {
@@ -37,7 +37,7 @@ public class AutoDriveCommand extends TimedCommand {
 
 	private void sleep() {
 		try {
-			Thread.sleep(WAIT_TIME);
+			Thread.sleep((long) (WAIT_TIME * 1000));
 		} catch (Throwable ex) {
 			ex.printStackTrace();
 		}

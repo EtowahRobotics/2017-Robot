@@ -17,9 +17,10 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 /**
- * Handles vision tracking input from the Raspberry PI
+ * Handles vision tracking on the RoboRIO
  * @author Dan Mulloy
  */
+// TODO Needs to be updated for the new design
 public class VisionTracking {
 	private static boolean running = false;
 	private static List<EaglePipeline> pipelines = new ArrayList<>();
@@ -40,9 +41,10 @@ public class VisionTracking {
 		NetworkTable.initialize();
 
 		frontCam = CameraServer.getInstance().startAutomaticCapture("FrontCam", 0);
-		turretCam = CameraServer.getInstance().startAutomaticCapture("TurretCam", 1);
+		// turretCam = CameraServer.getInstance().startAutomaticCapture("TurretCam", 1);
 
-		running = true;
+		// running = true;
+		running = false;
 	}
 
 	public static void tick() {

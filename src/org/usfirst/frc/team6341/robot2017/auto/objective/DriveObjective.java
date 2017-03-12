@@ -3,9 +3,8 @@
  */
 package org.usfirst.frc.team6341.robot2017.auto.objective;
 
-import java.util.TimerTask;
-
 import org.usfirst.frc.team6341.robot2017.Robot;
+import org.usfirst.frc.team6341.robot2017.Timers;
 
 /**
  * Drives straight for some amount of seconds
@@ -21,18 +20,13 @@ public class DriveObjective extends DriveBasedObjective {
 	 * @param time Time in seconds
 	 */
 	public DriveObjective(double speed, double time) {
-		super(speed);
+		super(speed, 0);
 		this.time = time;
 	}
 
 	@Override
 	public void start() {
 		Robot.drivetrain.autoDrive(speed, 0);
-		Robot.timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				finish();
-			}
-		}, ((long) time * 1000));
+		Timers.scheduleTeleop(() -> finish(), time);
 	}
 }

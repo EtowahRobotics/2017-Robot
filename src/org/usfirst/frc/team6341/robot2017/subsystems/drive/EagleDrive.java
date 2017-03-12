@@ -9,14 +9,14 @@ import edu.wpi.first.wpilibj.MotorSafetyHelper;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
- * Etowah's custom drivetrain
+ * Etowah's custom drivetrain with variable sensitivity
  * @author Dan Mulloy
  */
 public class EagleDrive extends Drivetrain implements MotorSafety {
 	private int factor = 3;
 	private boolean even = false;
 
-	private double expirationTime = 0.1;
+	private double expirationTime = 0.5;
 	private double sensitivity = 0.5;
 
 	private MotorSafetyHelper safetyHelper;
@@ -31,6 +31,7 @@ public class EagleDrive extends Drivetrain implements MotorSafety {
 	@Override
 	public void updateDashboard() {
 		super.updateDashboard();
+		SmartDashboard.putNumber("sensitivity", factor);
 		SmartDashboard.putBoolean("custom", true);
 	}
 

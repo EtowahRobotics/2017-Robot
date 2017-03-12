@@ -22,5 +22,5 @@ public class RobotMap {
 	// public static int pulley1 = 7;
 	// public static int pulley2 = 11;
 
-	// public static int climber = 0;
+	public static int climber = 0;
 }
