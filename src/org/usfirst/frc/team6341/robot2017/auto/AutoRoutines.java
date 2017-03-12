@@ -21,23 +21,23 @@ public class AutoRoutines {
 	// Replace rotation with curved driving
 	private static final AutoRoutine ROUTINE_1 = new AutoRoutine()
 			.add(new PreparationObjective())
-			.add(new DriveObjective(0.5, 1))
+			.add(new DriveObjective(0.5, 0, 1))
 			.add(new RotationObjective(-45, 0.75))
 			.add(new GearObjective(0.5, 0, 2))
-			.add(new DriveObjective(-0.5, 1))
+			.add(new DriveObjective(-0.5, 0, 1))
 			.add(new RotationObjective(45, 0.5))
-			.add(new DriveObjective(0.5, 1));
+			.add(new DriveObjective(0.5, 0, 1));
 	public static final AutoRoutine ROUTINE_2 = new AutoRoutine()
 			.add(new PreparationObjective())
 			.add(new GearObjective(0.5, 0, 2));
 	public static final AutoRoutine ROUTINE_3 = new AutoRoutine()
 			.add(new PreparationObjective())
-			.add(new DriveObjective(0.5, 1))
+			.add(new DriveObjective(0.5, 0, 1))
 			.add(new RotationObjective(45, 0.5))
 			.add(new GearObjective(0.5, 0, 2))
-			.add(new DriveObjective(-0.5, 1))
+			.add(new DriveObjective(-0.5, 0, 1))
 			.add(new RotationObjective(-45, 0.5))
-			.add(new DriveObjective(0.5, 1));
+			.add(new DriveObjective(0.5, 0, 1));
 
 	public static AutoRoutine getRoutine() {
 		int station = DriverStation.getInstance().getLocation();

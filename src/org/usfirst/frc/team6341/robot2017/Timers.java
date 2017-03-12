@@ -30,7 +30,10 @@ public class Timers {
 	}
 
 	public static void cancelAuto() {
-		auto.cancel();
+		if (auto != null) {
+			auto.cancel();
+			auto = null;
+		}
 	}
 
 	public static TimerTask scheduleTeleop(Runnable run, double timeout) {
@@ -49,7 +52,10 @@ public class Timers {
 	}
 
 	public static void cancelTeleop() {
-		teleop.cancel();
+		if (teleop != null) {
+			teleop.cancel();
+			teleop = null;
+		}
 	}
 
 	public static TimerTask schedule(Runnable run, double timeout) {
@@ -61,7 +67,7 @@ public class Timers {
 	}
 
 	public static void cancelAll() {
-		auto.cancel();
-		teleop.cancel();
+		cancelAuto();
+		cancelTeleop();
 	}
 }

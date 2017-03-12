@@ -16,11 +16,5 @@ public class RobotMap {
 	public static int frontRight = 1;
 	public static int backRight = 0;
 
-	// public static int flyWheels = 1;
-	// public static int turretRotation = 14;
-
-	// public static int pulley1 = 7;
-	// public static int pulley2 = 11;
-
 	public static int climber = 0;
 }
